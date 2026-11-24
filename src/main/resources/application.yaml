@@ -1,0 +1,57 @@
+spring:
+  application:
+    name: SaaS
+  datasource:
+    url: jdbc:mysql://localhost:3306/saasecommerce?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  sql:
+    init:
+      mode: always
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB
+      file-size-threshold: 50MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: your-email@gmail.com
+    password: app-password
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+# JWT signing secret (required, 64+ random characters for HS512). Set via JWT_SECRET env var.
+jwt:
+  secret: ${JWT_SECRET}
+
+# Stripe Payment Configuration
+stripe:
+  secret:
+    key: ${STRIPE_SECRET_KEY:sk_test_PutYourSecretKeyHere}
+  webhook:
+    secret: ${STRIPE_WEBHOOK_SECRET:whsec_PutYourWebhookSecretHere}
+
+file:
+  upload-dir: uploads/flags
+
+server:
+  port: 8080
+  tomcat:
+    max-http-form-post-size: 50MB
+    max-swallow-size: 50MB
